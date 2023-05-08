@@ -1,26 +1,36 @@
 import { useState } from "react";
+import Cookies from 'js-cookie'
 
 export const Login = () => {
     const [login, setLogin] = useState(true);
-    
+    const expireIn=5*60*60*1000;
+
     const submit = ($event) => {
         event.preventDefault();
         if (login) {
             let email = event.target.lemail.value;
             let password = event.target.lpassword.value;
             console.log(email, password);
-            //TODO  קריאת שרת לאימות נתונים
+            //TODO   קריאת שרת לאימות נתונים ושמירה
+            //TODO בחזרה מהשרת לשמור את הטוקן בעוגיה
+            Cookies.set('token', '...', {expires: new Date(new Date().getTime()+expireHours)})
         }
         else {
             let email = event.target.semail.value;
             let password = event.target.spassword.value;
             let password2 = event.target.spassword2.value;
             let name = event.target.sname.value;
-            if(! password === password2){
+            if (password != password2) {
                 //TODO להציג שגיאה
+                event.target.spassword2.value = ""
             }
             console.log(email, password, password2, name)
+
+            //TODO   קריאת שרת לאימות נתונים ושמירה
+            //TODO בחזרה מהשרת לשמור את הטוקן בעוגיה
+            Cookies.set('token', '...', {})
         }
+        location.href='/';
     }
 
 
